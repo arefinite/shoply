@@ -127,26 +127,33 @@ const Products = () => {
                     Rating: <strong>{product.rating}</strong> <Star size={20} />
                   </span>
                 </div>
-                <div className='flex flex-col gap-1'>
-                  <span>
-                    Before:{' '}
-                    <span className='line-through'>${product.price}</span>
-                  </span>
+
+                <div className='flex flex-col gap-2'>
                   <span className='font-semibold'>
+                    {product.discount !== undefined &&
+                      +product.discount !== 0 && (
+                        <div>
+                          Before:{' '}
+                          <span className='line-through'>${product.price}</span>
+                        </div>
+                      )}
                     Price: $
-                    {product.discount &&
-                      (
-                        +product.price -
+                    {product.discount !== undefined && +product.discount !== 0
+                      ? +product.price -
                         Math.ceil((+product.price * +product.discount) / 100)
-                      ).toFixed(2)}{' '}
+                      : product.price}{' '}
                     <span className='text-sm text-red-500'>
-                      ({product.discount}% discount)
+                      {product.discount !== undefined && +product.discount !== 0
+                        ? `(${product.discount}% discount)`
+                        : '(No discount)'}
                     </span>
                   </span>
                 </div>
               </CardContent>
               <CardFooter className='flex justify-between'>
-                <Button asChild><Link to={`/product/${product._id}`}>View Details</Link></Button>
+                <Button asChild>
+                  <Link to={`/product/${product._id}`}>View Details</Link>
+                </Button>
               </CardFooter>
             </Card>
           ))}

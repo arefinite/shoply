@@ -60,27 +60,33 @@ const ProductDetails = () => {
               Brand : <Badge>{product.brand}</Badge>
             </span>
           </div>
-          <div className='flex flex-col gap-2'>
-            <span className=' font-semibold'>
-              <div>
-                Before: <span className='line-through'>${product.price}</span>
-              </div>
-              Price: $
-              {product.discount &&
-                +product.price -
-                  Math.ceil((+product.price * +product.discount) / 100)}{' '}
-              <span className='text-sm text-red-500'>
-                ({product.discount}% discount)
-              </span>
-            </span>
-          </div>
+
          
-          
+<div className='flex flex-col gap-2'>
+  <span className='font-semibold'>
+    {product.discount !== undefined && +product.discount !== 0 && (
+      <div>
+        Before: <span className='line-through'>${product.price}</span>
+      </div>
+    )}
+    Price: $
+    {product.discount !== undefined && +product.discount !== 0 ?
+      (+product.price - Math.ceil((+product.price * +product.discount) / 100)) :
+      product.price}{' '}
+    <span className='text-sm text-red-500'>
+      {product.discount !== undefined && +product.discount !== 0 ? 
+        `(${product.discount}% discount)` :
+        '(No discount)'}
+    </span>
+  </span>
+</div>
+
+
           <div>
             <p className='font-bold'>Product Description</p>
             <p>{product.description}</p>
           </div>
-            <Button className='mt-4'>Add to Cart</Button>
+          <Button className='mt-4'>Add to Cart</Button>
         </CardContent>
       </Card>
     </main>
