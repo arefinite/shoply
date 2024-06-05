@@ -17,6 +17,7 @@ import ManageProducts from '@/pages/dashboard/ManageProducts'
 import { getSingleProduct } from '@/services/api'
 
 import { createBrowserRouter } from 'react-router-dom'
+import PrivateRoutes from './PrivateRoutes'
 
 export const appRouter = createBrowserRouter([
   {
@@ -56,7 +57,11 @@ export const appRouter = createBrowserRouter([
   },
   {
     path: '/',
-    element: <DashboardLayout />,
+    element: (
+      <PrivateRoutes>
+        <DashboardLayout />
+      </PrivateRoutes>
+    ),
     children: [
       {
         path: 'dashboard/home',
@@ -70,16 +75,16 @@ export const appRouter = createBrowserRouter([
         path: 'dashboard/manage-products/add-product',
         element: <AddProduct />,
       },
-    
+
       {
         path: 'dashboard/manage-products',
         element: <ManageProducts />,
       },
-     
+
       {
         path: 'dashboard/manage-products/update-product/:id',
         element: <UpdateProduct />,
-        loader:({params})=> getSingleProduct(params.id!)
+        loader: ({ params }) => getSingleProduct(params.id!),
       },
     ],
   },

@@ -9,8 +9,14 @@ const apiClient = axios.create({
   baseURL,
 })
 
+const token = localStorage.getItem('access-token')
+
 export const addProduct = async (data: AddProductFormSchema) => {
-  return await apiClient.post(`${baseURL}/product`, data)
+  return await axios.post(`${baseURL}/product`, data, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
 }
 
 export const getAllProducts = async () => {
@@ -40,4 +46,12 @@ export const signIn = async (data: User) => {
 
 export const signOut = async () => {
   return await apiClient.post(`${baseURL}/auth/sign-out`)
+}
+
+export const getUser = async()=> {
+  return (await apiClient.get(`${baseURL}/user`), {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
 }

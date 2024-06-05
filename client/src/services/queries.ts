@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query"
-import { getAllProducts, getSingleProduct } from "./api"
+import { getAllProducts, getSingleProduct, getUser } from "./api"
 
 
 export const useGetAllProducts = () => {
@@ -16,6 +16,15 @@ export const useGetSingleProduct = (id:string) => {
     {
       queryKey: ['products', id],
       queryFn: ()=> getSingleProduct(id)
+    }
+  )
+}
+
+export const useGetUser = () => {
+  return useQuery(
+    {
+      queryKey: ['user'],
+      queryFn: ()=> getUser()
     }
   )
 }

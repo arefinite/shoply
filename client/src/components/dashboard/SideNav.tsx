@@ -10,8 +10,14 @@ import {
   SheetHeader,
   SheetTrigger,
 } from '../ui/sheet'
+import { auth } from '@/firebase/firebase.config'
+import { useSignOut } from 'react-firebase-hooks/auth'
 
 const SideNav = () => {
+  const [signOut] = useSignOut(auth)
+  const handleSignOut = async () => {
+    await signOut()
+  }
   return (
     <main>
       <nav className='center hidden md:block'>
@@ -35,7 +41,12 @@ const SideNav = () => {
             <Button variant='outline' size='sm' className='mt-4 w-fit' asChild>
               <Link to='/'>Visit Site</Link>
             </Button>
-            <Button variant='destructive' size='sm' className='mt-4 w-fit'>
+            <Button
+              variant='destructive'
+              size='sm'
+              className='mt-4 w-fit'
+              onClick={handleSignOut}
+            >
               Logout
             </Button>
           </div>
@@ -68,7 +79,7 @@ const SideNav = () => {
                         </li>
                       </SheetClose>
                     </NavLink>
-                   
+
                     <NavLink to='dashboard/profile'>
                       <SheetClose asChild>
                         <li className='flex gap-2 items-center'>
@@ -79,13 +90,23 @@ const SideNav = () => {
                     </NavLink>
                   </ul>
                   <div className='flex gap-2'>
-            <Button variant='outline' size='sm' className='mt-4 w-fit' asChild>
-              <Link to='/'>Visit Site</Link>
-            </Button>
-            <Button variant='destructive' size='sm' className='mt-4 w-fit'>
-              Logout
-            </Button>
-          </div>
+                    <Button
+                      variant='outline'
+                      size='sm'
+                      className='mt-4 w-fit'
+                      asChild
+                    >
+                      <Link to='/'>Visit Site</Link>
+                    </Button>
+                    <Button
+                      variant='destructive'
+                      size='sm'
+                      className='mt-4 w-fit'
+                      onClick={handleSignOut}
+                    >
+                      Logout
+                    </Button>
+                  </div>
                 </nav>
               </SheetDescription>
             </SheetHeader>

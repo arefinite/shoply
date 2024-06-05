@@ -1,9 +1,13 @@
+import { auth } from '@/firebase/firebase.config'
 import { Key } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import { useAuthState } from 'react-firebase-hooks/auth'
 
 import { Link } from 'react-router-dom'
 
 const Header = () => {
+  const [user] = useAuthState(auth)
+
   const [time, setTime] = useState(new Date().toLocaleTimeString())
   const date = new Date().toDateString()
   useEffect(() => {
@@ -26,7 +30,7 @@ const Header = () => {
             </span>
           </div>
           <div className='text-right  hidden md:block'>
-            <div>Welcome user</div>
+            <div>Welcome {user?.email}</div>
             <div>
               {date} | {time}
             </div>
