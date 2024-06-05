@@ -1,4 +1,22 @@
+import { useSignIn } from '@/services/mutations'
+import { User } from '@/types/user'
+import { AxiosError } from 'axios'
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
+import { toast } from 'sonner'
+
 const SignIn = () => {
+  const { register, handleSubmit } = useForm()
+  const { mutateAsync: signInUser, isPending } = useSignIn()
+
+  const onSubmit: SubmitHandler<FieldValues> = async data => {
+    try {
+      const userData: User = data as User
+      await signInUser(userData)
+      toast('Sign in successful')
+    } catch (error) {
+      if (error instanceof AxiosError) toast(error.response?.data.message)
+    }
+  }
   return (
     <main>
       <div className='col-span-2 grid items-start gap-6 lg:col-span-1'>
@@ -34,7 +52,7 @@ const SignIn = () => {
                 </div>
               </div>
 
-              <form>
+              <form onSubmit={handleSubmit(onSubmit)}>
                 <div className='grid gap-2'>
                   <label
                     className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
@@ -47,6 +65,7 @@ const SignIn = () => {
                     id='email'
                     placeholder='demo@example.com'
                     type='email'
+                    {...register('email')}
                   />
                 </div>
                 <div className='grid gap-2 mt-4'>
@@ -60,6 +79,7 @@ const SignIn = () => {
                     className='flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'
                     id='password'
                     type='password'
+                    {...register('password')}
                   />
                 </div>
 
@@ -68,7 +88,7 @@ const SignIn = () => {
                     role='submit'
                     className='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 w-full'
                   >
-                    Login
+                    {isPending ? 'Logging...' : 'Login'}
                   </button>
                 </div>
               </form>

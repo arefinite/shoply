@@ -1,6 +1,7 @@
 import { AddProductFormSchema } from '../validators/FormSchema'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { addProduct, deleteProduct, updateProduct } from './api'
+import { addProduct, deleteProduct, signIn, signOut, signUp, updateProduct } from './api'
+import { User } from '@/types/user'
 
 export const useAddProduct = () => {
   const queryClient = useQueryClient()
@@ -35,5 +36,23 @@ export const useUpdateProduct = (id:string,) => {
         await queryClient.invalidateQueries({queryKey:['products']})
       }
     }
+  })
+}
+
+export const useSignUp = () => {
+  return useMutation({
+    mutationFn: (data:User)=>signUp(data)
+  })
+}
+
+export const useSignIn = () => {
+  return useMutation({
+    mutationFn: (data:User)=>signIn(data)
+  })
+}
+
+export const useSignOut = () => {
+  return useMutation({
+    mutationFn: signOut
   })
 }

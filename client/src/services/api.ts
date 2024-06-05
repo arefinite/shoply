@@ -1,4 +1,5 @@
 import { Product } from '@/types/product'
+import { User } from '@/types/user'
 import { AddProductFormSchema } from '@/validators/FormSchema'
 import axios from 'axios'
 
@@ -27,4 +28,16 @@ export const getSingleProduct = async (id: string) => {
 
 export const updateProduct = async (id: string, data: AddProductFormSchema) => {
   return await apiClient.patch(`${baseURL}/product/${id}`, data)
+}
+
+export const signUp = async (data: User) => {
+  return await apiClient.post(`${baseURL}/auth/sign-up`, data)
+}
+
+export const signIn = async (data: User) => {
+  return await apiClient.post(`${baseURL}/auth/sign-in`, data)
+}
+
+export const signOut = async () => {
+  return await apiClient.post(`${baseURL}/auth/sign-out`)
 }
