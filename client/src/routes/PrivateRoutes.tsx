@@ -1,5 +1,5 @@
 import { AuthContext } from '@/components/context/AuthContext'
-import Loader from '@/components/Loader'
+
 import { auth } from '@/firebase/firebase.config'
 import { useContext } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
@@ -11,7 +11,7 @@ const PrivateRoutes = ({ children }: { children: React.ReactNode }) => {
   if (loading) {
     return (
       <div className='h-screen flex justify-center items-center'>
-        <Loader />
+        <p>Loading...</p>
       </div>
     )
   }
