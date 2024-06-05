@@ -14,6 +14,7 @@ import {
   UpdateProduct,
 } from '@/pages'
 import ManageProducts from '@/pages/dashboard/ManageProducts'
+import { getSingleProduct } from '@/services/api'
 
 import { createBrowserRouter } from 'react-router-dom'
 
@@ -78,6 +79,7 @@ export const appRouter = createBrowserRouter([
       {
         path: 'dashboard/manage-products/update-product/:id',
         element: <UpdateProduct />,
+        loader:({params})=> getSingleProduct(params.id!)
       },
     ],
   },

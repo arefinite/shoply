@@ -24,16 +24,19 @@ import { LoaderCircle } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useDeleteProduct } from '@/services/mutations'
 import { useState } from 'react'
+import { toast } from 'sonner'
 
 const ManageProducts = () => {
   const [deleteProductId, setDeleteProductId] = useState<string>('')
   const { data: products, isPending, isError, error } = useGetAllProducts()
-  const { mutate: deleteProduct } = useDeleteProduct()
+  const { mutateAsync: deleteProductAsync } = useDeleteProduct()
 
-  const handleDeleteProduct = (id: string) => {
-    deleteProduct(id)
+  const handleDeleteProduct = async(id: string) => {
+    await deleteProductAsync(id)
+      toast('Product deleted successfully')
+    
   }
-  console.log(deleteProductId)
+  
 
   return (
     <main className='flex flex-col gap-8 my-8 w-full'>
@@ -74,8 +77,8 @@ const ManageProducts = () => {
                 <TableCell>{product.category}</TableCell>
                 <TableCell>{product.price}</TableCell>
                 <TableCell className='text-right space-x-2'>
-                  <Button variant='secondary'>
-                    <Link to={`/dashboard/update-product/${product._id}`}>
+                  <Button variant='secondary' asChild>
+                    <Link to={`/dashboard/manage-products/update-product/${product._id}`}>
                       Update
                     </Link>
                   </Button>

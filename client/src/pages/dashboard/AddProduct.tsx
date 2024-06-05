@@ -27,8 +27,11 @@ import {
 } from '@/validators/FormSchema'
 import { useAddProduct } from '@/services/mutations'
 import { LoaderCircle } from 'lucide-react'
+import { Link, useNavigate } from 'react-router-dom'
+import { toast } from 'sonner'
 
 const AddProduct = () => {
+  const navigate = useNavigate()
   const form = useForm<AddProductFormSchema>({
     resolver: zodResolver(addProductFormSchema),
     defaultValues: {
@@ -42,9 +45,9 @@ const AddProduct = () => {
     },
   })
   const imgRef = form.register('image')
-  const { mutate: addProduct, isPending } = useAddProduct()
+  const { mutateAsync: addProductAsync, isPending } = useAddProduct()
 
-  const onSubmit: SubmitHandler<AddProductFormSchema> = data => {
+  const onSubmit: SubmitHandler<AddProductFormSchema> =async data => {
     const formData = new FormData()
     formData.append('title', data.title)
     formData.append('brand', data.brand)
@@ -57,10 +60,12 @@ const AddProduct = () => {
     formData.append('discount', data.discount)
     formData.append('rating', data.rating)
 
-    console.log(formData)
+    
 
     // @ts-expect-error ( something is wrong with the type of the data.image)
-    addProduct(formData)
+   await  addProductAsync(formData)
+    toast('Product Added Successfully') 
+    navigate('/dashboard/manage-products')
   }
 
   return (
@@ -75,8 +80,10 @@ const AddProduct = () => {
               currentPage='Add Product'
             />
             <div className='items-center gap-4 hidden md:flex'>
-              <Button variant={'outline'}>
-                <span className='ml-2'>Cancel</span>
+              <Button variant={'outline'} asChild>
+                <span className='ml-2'>
+                  <Link to='/dashboard/manage-products'>Go Back</Link>
+                </span>
               </Button>
 
               <Button type='submit' disabled={isPending}>
@@ -211,7 +218,7 @@ const AddProduct = () => {
             <CardFooter>
               <div className='flex items-center gap-4 md:hidden'>
                 <Button variant={'outline'}>
-                  <span className='ml-2'>Cancel</span>
+                  <span className='ml-2'>Go Back</span>
                 </Button>
 
                 <Button type='submit' disabled={isPending}>

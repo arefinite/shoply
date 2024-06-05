@@ -1,3 +1,4 @@
+
 import { AddProductFormSchema } from '@/validators/FormSchema';
 import axios from 'axios'
 
@@ -17,4 +18,12 @@ export const getAllProducts = async () => {
 
 export const deleteProduct = async (id: string) => {
   return await apiClient.delete(`${baseURL}/product/${id}`)
+}
+
+export const getSingleProduct = async (id: string) => {
+  return (await apiClient.get<AddProductFormSchema>(`${baseURL}/product/${id}`)).data
+}
+
+export const updateProduct = async (id: string, data: AddProductFormSchema) => {
+  return await apiClient.patch(`${baseURL}/product/${id}`, data)
 }

@@ -1,6 +1,6 @@
 import { AddProductFormSchema } from '../validators/FormSchema'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { addProduct, deleteProduct } from './api'
+import { addProduct, deleteProduct, updateProduct } from './api'
 
 export const useAddProduct = () => {
   const queryClient = useQueryClient()
@@ -23,5 +23,17 @@ export const useDeleteProduct = () => {
         await queryClient.invalidateQueries({ queryKey: ['products'] })
       }
     },
+  })
+}
+
+export const useUpdateProduct = (id:string,) => {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: (product:AddProductFormSchema) => updateProduct(id, product),
+    onSettled: async (_, error) => {
+      if (!error) {
+        await queryClient.invalidateQueries({queryKey:['products']})
+      }
+    }
   })
 }
