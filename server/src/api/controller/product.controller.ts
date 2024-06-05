@@ -8,7 +8,10 @@ import createHttpError from 'http-errors'
 
 // get all products
 export const getAllProducts = asyncHandler(
-  async (req: Request, res: Response, next: NextFunction) => {}
+  async (req: Request, res: Response, next: NextFunction) => {
+    const products = await Product.find({})
+    res.status(200).json(products)
+  }
 )
 
 // get single product
@@ -64,5 +67,10 @@ export const updateProduct = asyncHandler(
 
 // delete product
 export const deleteProduct = asyncHandler(
-  async (req: Request, res: Response, next: NextFunction) => {}
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params
+    const product = await Product.findByIdAndDelete(id)
+    if (!product) return next(createHttpError(404, 'Product not found'))
+    res.status(200).json({ message: 'Product deleted successfully' })
+  }
 )

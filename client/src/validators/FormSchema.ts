@@ -46,12 +46,12 @@ export const addProductFormSchema = z.object({
   description: z.string().min(3, { message: 'Description has to be at least 3 characters long' }),
   price: z.string().refine(value => {
     const priceValue = parseInt(value); // Parse string to integer
-    return priceValue >= 1 && priceValue <= 5;
+    return priceValue >= 0 && priceValue <= 10000;
   }, { message: 'Price must be a number between 1 and 5' }),
   discount: z.string().refine(value => {
     const discountValue = parseInt(value); // Parse string to integer
-    return discountValue >= 1 && discountValue <= 5;
-  }, { message: 'Discount must be a number between 1 and 5' }),
+    return discountValue >= 0 && discountValue <= 100;
+  }, { message: 'Discount must be a number between 0 and 100' }),
   rating: z.string().refine(value => {
     const ratingValue = parseInt(value); // Parse string to integer
     return ratingValue >= 1 && ratingValue <= 5;

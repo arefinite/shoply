@@ -25,7 +25,7 @@ import {
   addProductFormSchema,
   AddProductFormSchema,
 } from '@/validators/FormSchema'
-import { useAddProduct } from '@/api/mutations'
+import { useAddProduct } from '@/services/mutations'
 import { LoaderCircle } from 'lucide-react'
 
 const AddProduct = () => {
@@ -56,7 +56,7 @@ const AddProduct = () => {
     formData.append('price', data.price)
     formData.append('discount', data.discount)
     formData.append('rating', data.rating)
-   
+
     console.log(formData)
 
     // @ts-expect-error ( something is wrong with the type of the data.image)
@@ -200,12 +200,7 @@ const AddProduct = () => {
                     <FormItem>
                       <FormLabel>Description</FormLabel>
                       <FormControl>
-                        <Textarea
-                          rows={5}
-                          placeholder='Tell us a little bit about yourself'
-                          className='resize-none'
-                          {...field}
-                        />
+                        <Textarea rows={5} className='resize-none' {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
