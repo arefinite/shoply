@@ -3,25 +3,28 @@ import { useSignUp } from '@/services/mutations'
 import { User } from '@/types/user'
 import { toast } from 'sonner'
 import { AxiosError } from 'axios'
+import { useNavigate } from 'react-router-dom'
+import { AuthContext } from '../context/AuthContext'
+import { useContext } from 'react'
 
 const SignUp = () => {
+  const { setIsLoggedIn } = useContext(AuthContext);
   const { register, handleSubmit } = useForm()
-  const {
-    mutateAsync: createUser,
-    isPending,
-
-  } = useSignUp()
-
-  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+  const { mutateAsync: createUser, isPending } = useSignUp()
+  const navigate = useNavigate()
+  const onSubmit: SubmitHandler<FieldValues> = async data => {
     try {
-      const userData: User = data as User;
-      await createUser(userData);
-      toast('Sign up successful');
+      const userData: User = data as User
+      await createUser(userData).then(response =>
+        localStorage.setItem('access-token', response.data.token)
+      )
+      toast('Sign up successful')
+      navigate('/')
+      setIsLoggedIn(true)
     } catch (error) {
-      if(error instanceof AxiosError)
-      toast(error.response?.data.message);
+      if (error instanceof AxiosError) toast(error.response?.data.message)
     }
-  };
+  }
 
   return (
     <main>
@@ -48,6 +51,7 @@ const SignUp = () => {
                   <input
                     {...register('fullName')}
                     id='fullName'
+                    required
                     type='text'
                     className='flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'
                   />
@@ -63,6 +67,7 @@ const SignUp = () => {
                     {...register('email')}
                     id='email'
                     type='email'
+                    required
                     className='flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'
                   />
                 </div>
@@ -77,6 +82,7 @@ const SignUp = () => {
                     {...register('password')}
                     id='password'
                     type='password'
+                    required
                     className='flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'
                   />
                 </div>

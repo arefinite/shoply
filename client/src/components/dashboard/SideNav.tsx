@@ -12,11 +12,16 @@ import {
 } from '../ui/sheet'
 import { auth } from '@/firebase/firebase.config'
 import { useSignOut } from 'react-firebase-hooks/auth'
+import { useContext } from 'react'
+import { AuthContext } from '../context/AuthContext'
 
 const SideNav = () => {
+  const {setIsLoggedIn} = useContext(AuthContext)
   const [signOut] = useSignOut(auth)
   const handleSignOut = async () => {
     await signOut()
+    localStorage.removeItem('access-token')
+    setIsLoggedIn(false)
   }
   return (
     <main>

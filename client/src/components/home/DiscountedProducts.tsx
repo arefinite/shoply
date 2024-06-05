@@ -18,13 +18,11 @@ type DiscountedProductsProps = {
 const DiscountedProducts = ({
   discountedProducts,
 }: DiscountedProductsProps) => {
-  // console.log(discountedProducts && discountedProducts.length)
   const [selectCategory, setSelectCategory] = useState<string>('all')
   const categories = discountedProducts && [
     'all',
     ...new Set(discountedProducts.map(product => product.category)),
   ]
-  console.log(categories)
 
   const products =
     discountedProducts &&

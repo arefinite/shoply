@@ -1,20 +1,26 @@
 import SignIn from '@/components/auth/SignIn'
 import SignUp from '@/components/auth/SignUp'
+import { AuthContext } from '@/components/context/AuthContext'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { auth } from '@/firebase/firebase.config'
 import { Lock } from 'lucide-react'
-import { useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { useNavigate } from 'react-router-dom'
 
 const Auth = () => {
+  const { isLoggedIn } = useContext(AuthContext)
+  console.log(isLoggedIn)
   const [user] = useAuthState(auth)
   const navigate = useNavigate()
   useEffect(() => {
     if (user) {
       navigate('/')
     }
-  }, [navigate, user])
+    if (isLoggedIn) {
+      navigate('/')
+    }
+  }, [navigate, user, isLoggedIn])
   return (
     <main className='center md:flex md:justify-center md:items-center pt-16'>
       <section>

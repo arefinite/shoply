@@ -5,18 +5,27 @@ import { AxiosError } from 'axios'
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { useSignInWithGoogle } from 'react-firebase-hooks/auth'
+import { AuthContext } from '../context/AuthContext'
+import { useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const SignIn = () => {
+  const { setIsLoggedIn } = useContext(AuthContext)
   const [signInWithGoogle] = useSignInWithGoogle(auth)
   const { register, handleSubmit } = useForm()
   const { mutateAsync: signInUser, isPending } = useSignIn()
   const { mutateAsync: signUp } = useSignUp()
-
+  const navigate = useNavigate()
   const onSubmit: SubmitHandler<FieldValues> = async data => {
     try {
       const userData: User = data as User
-      await signInUser(userData)
+      await signInUser(userData).then(response =>
+        localStorage.setItem('access-token', response.data.token)
+      )
       toast('Sign in successful')
+
+      setIsLoggedIn(true)
+      navigate('/')
     } catch (error) {
       if (error instanceof AxiosError) toast(error.response?.data.message)
     }

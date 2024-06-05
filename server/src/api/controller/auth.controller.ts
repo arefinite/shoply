@@ -42,11 +42,12 @@ export const signUp = asyncHandler(
         password: hashedPassword,
       })
     }
+    
     if (!newUser) return next(createHttpError(400, 'User can not be created'))
     //generate token
     const token = generateToken(res, newUser._id.toString())
 
-    res.status(201).json({ message: 'Sign up Successful', token })
+    res.status(201).json({ message: 'Sign up Successful', token, fullName:newUser.fullName, email: newUser.email })
   }
 )
 
