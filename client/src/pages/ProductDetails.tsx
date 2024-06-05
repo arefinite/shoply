@@ -1,4 +1,4 @@
-import Loader from '@/components/Loader'
+
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
@@ -23,7 +23,7 @@ const ProductDetails = () => {
   if (isProductPending)
     return (
       <div className='grid place-items-center h-screen'>
-        <Loader />
+        
       </div>
     )
   if (isProductError)
