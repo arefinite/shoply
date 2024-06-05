@@ -1,4 +1,5 @@
 
+import { Product } from '@/types/product';
 import { AddProductFormSchema } from '@/validators/FormSchema';
 import axios from 'axios'
 
@@ -13,7 +14,7 @@ export const addProduct = async (data: AddProductFormSchema) => {
 }
 
 export const getAllProducts = async () => {
-  return (await apiClient.get<AddProductFormSchema>(`${baseURL}/product/all-products`)).data
+  return (await apiClient.get<Product[]>(`${baseURL}/product/all-products`)).data
 }
 
 export const deleteProduct = async (id: string) => {
