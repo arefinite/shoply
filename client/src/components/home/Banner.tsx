@@ -1,5 +1,4 @@
 import { Button } from '../ui/button'
-import bannerImg from '/banner.svg'
 const Banner = () => {
   return (
     <div className='bg-muted mt-8 pb-16'>
@@ -21,9 +20,9 @@ const Banner = () => {
           </div>
         </div>
 
-        <div className='flex-1 flex justify-end'>
+        {/* <div className='flex-1 flex justify-end'>
           <img src={bannerImg} className='h-60 w-60' alt='Banner Image' />
-        </div>
+        </div> */}
       </section>
     </div>
   )

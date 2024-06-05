@@ -1,4 +1,4 @@
-import faq from '/faq.svg'
+// import faq from '/faq.svg'
 import {
   Accordion,
   AccordionContent,
@@ -36,9 +36,9 @@ const Faq = () => {
             
           </Accordion>
         </div>
-        <div className='flex-1'>
+        {/* <div className='flex-1'>
           <img src={faq} alt='faq' />
-        </div>
+        </div> */}
       </div>
     </section>
   )

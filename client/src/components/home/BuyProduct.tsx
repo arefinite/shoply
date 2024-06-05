@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { Button } from '../ui/button'
-import Buy from 'buy.svg'
+
 const BuyProduct = () => {
   return (
     <section className='py-8 center'>
@@ -8,9 +8,9 @@ const BuyProduct = () => {
         <h2 className='text-2xl font-bold'>How to Buy from us</h2>
       </div>
       <div className='flex flex-col gap-4 md:flex-row justify-between py-10'>
-        <div className='flex-1'>
+        {/* <div className='flex-1'>
           <img src={Buy} alt='buy' />
-        </div>
+        </div> */}
         <div className='flex-1 items-center flex justify-center'>
           <div className='space-y-4'>
             <h1 className='text-2xl font-bold'>Shop From Home OR Outlet</h1>
