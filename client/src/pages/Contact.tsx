@@ -29,9 +29,7 @@ const Contact = () => {
               Send Message
             </Button>
           </div>
-          <div className='mt-4 text-center text-sm'>
-            Don&apos;t have an account?{' '}
-          </div>
+       
         </div>
       </div>
       <div className='w-1/2 justify-center hidden md:flex'>

@@ -1,12 +1,11 @@
-
-import { Product } from '@/types/product';
-import { AddProductFormSchema } from '@/validators/FormSchema';
+import { Product } from '@/types/product'
+import { AddProductFormSchema } from '@/validators/FormSchema'
 import axios from 'axios'
 
 const baseURL = import.meta.env.VITE_API_URL
 
 const apiClient = axios.create({
-  baseURL
+  baseURL,
 })
 
 export const addProduct = async (data: AddProductFormSchema) => {
@@ -14,7 +13,8 @@ export const addProduct = async (data: AddProductFormSchema) => {
 }
 
 export const getAllProducts = async () => {
-  return (await apiClient.get<Product[]>(`${baseURL}/product/all-products`)).data
+  return (await apiClient.get<Product[]>(`${baseURL}/product/all-products`))
+    .data
 }
 
 export const deleteProduct = async (id: string) => {
@@ -22,7 +22,7 @@ export const deleteProduct = async (id: string) => {
 }
 
 export const getSingleProduct = async (id: string) => {
-  return (await apiClient.get<AddProductFormSchema>(`${baseURL}/product/${id}`)).data
+  return (await apiClient.get<Product>(`${baseURL}/product/${id}`)).data
 }
 
 export const updateProduct = async (id: string, data: AddProductFormSchema) => {

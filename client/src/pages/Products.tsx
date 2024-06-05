@@ -13,6 +13,7 @@ import { useGetAllProducts } from '@/services/queries'
 
 import { LoaderCircle, Star } from 'lucide-react'
 import { Product } from '@/types/product'
+import { Link } from 'react-router-dom'
 
 const Products = () => {
   const {
@@ -145,7 +146,7 @@ const Products = () => {
                 </div>
               </CardContent>
               <CardFooter className='flex justify-between'>
-                <Button>View Details</Button>
+                <Button asChild><Link to={`/product/${product._id}`}>View Details</Link></Button>
               </CardFooter>
             </Card>
           ))}
