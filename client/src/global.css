@@ -66,6 +66,24 @@
     }
   }
 
+  @layer components {
+    .center {
+      @apply container max-w-7xl mx-auto;
+    }
+  }
+  
+  @layer components{
+    .active{
+      @apply font-semibold
+    }
+  }
+  
+  /* @layer components {
+    .section-padding {
+      @apply py-8;
+    }
+  } */
+
   @layer base {
     * {
       @apply border-border;
@@ -74,3 +92,4 @@
       @apply bg-background text-foreground;
     }
   }
+
