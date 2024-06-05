@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { Button } from '../ui/button'
-import Buy from '/buy.svg'
+import Buy from 'buy.svg'
 const BuyProduct = () => {
   return (
     <section className='py-8 center'>

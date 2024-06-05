@@ -1,4 +1,4 @@
-import loader from '/loader.gif'
+import loader from 'loader.gif'
 const Loader = () => {
   return (
     <div className="flex justify-center items-center">
