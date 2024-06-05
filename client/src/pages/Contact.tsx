@@ -2,7 +2,6 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
-import contact from '/contact.svg'
 
 const Contact = () => {
   return (
@@ -32,9 +31,9 @@ const Contact = () => {
        
         </div>
       </div>
-      <div className='w-1/2 justify-center hidden md:flex'>
+      {/* <div className='w-1/2 justify-center hidden md:flex'>
         <img src={contact} alt='contact' />
-      </div>
+      </div> */}
     </div>
   )
 }
