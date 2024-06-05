@@ -4,6 +4,7 @@ import { validationResult } from 'express-validator'
 import createHttpError from 'http-errors'
 import { User } from '../model/user.model'
 import bcrypt from 'bcryptjs'
+import { generateToken } from '../service/generateToken'
 
 // sign up user
 export const signUp = asyncHandler(
@@ -15,19 +16,37 @@ export const signUp = asyncHandler(
     const { fullName, email, password } = req.body
     //check for existing user
     const foundUser = await User.findOne({ email })
-    if (foundUser) return next(createHttpError(400, 'User already exists'))
+    if (foundUser && password)
+      return next(createHttpError(400, 'User already exists'))
+    if (!password && foundUser) {
+      const token = generateToken(res, foundUser._id)
+      res.status(201).json({ message: 'Sign in Successful', token })
+    }
     //hashing the password
-    const hashedPassword = await bcrypt.hash(password, 10)
+    let hashedPassword
+    if (password) {
+      hashedPassword = await bcrypt.hash(password, 10)
+    }
     //create new user
-    const newUser = await User.create({
-      fullName,
-      email,
-      password: hashedPassword,
-    })
+    let newUser
+    if (!password) {
+      newUser = await User.create({
+        fullName,
+        email,
+      })
+    }
+    if (password) {
+      newUser = await User.create({
+        fullName,
+        email,
+        password: hashedPassword,
+      })
+    }
     if (!newUser) return next(createHttpError(400, 'User can not be created'))
     //generate token
-    // generateToken(res, newUser._id.toString())
-    res.status(201).json({ message: 'Sign up Successful' })
+    const token = generateToken(res, newUser._id.toString())
+
+    res.status(201).json({ message: 'Sign up Successful', token })
   }
 )
 
@@ -49,8 +68,8 @@ export const signIn = asyncHandler(
     if (!isMatchPassword)
       return next(createHttpError(400, 'Invalid credentials'))
     //generate token
-    // generateToken(res, user._id.toString())
-    res.status(200).json({ message: 'Sign In Successful' })
+    const token = generateToken(res, user._id.toString())
+    res.status(200).json({ message: 'Sign In Successful', token })
   }
 )
 

@@ -1,12 +1,16 @@
-import { useSignIn } from '@/services/mutations'
+import { auth } from '@/firebase/firebase.config'
+import { useSignIn, useSignUp } from '@/services/mutations'
 import { User } from '@/types/user'
 import { AxiosError } from 'axios'
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
+import { useSignInWithGoogle } from 'react-firebase-hooks/auth'
 
 const SignIn = () => {
+  const [signInWithGoogle] = useSignInWithGoogle(auth)
   const { register, handleSubmit } = useForm()
   const { mutateAsync: signInUser, isPending } = useSignIn()
+  const { mutateAsync: signUp } = useSignUp()
 
   const onSubmit: SubmitHandler<FieldValues> = async data => {
     try {
@@ -17,6 +21,29 @@ const SignIn = () => {
       if (error instanceof AxiosError) toast(error.response?.data.message)
     }
   }
+  const handleGoogleSignIn = async () => {
+    try {
+      const data = await signInWithGoogle()
+      const userData = {
+        email: data?.user.email,
+        fullName: data?.user.displayName,
+      }
+      console.log(userData)
+      if (userData.email && userData.fullName) {
+        //@ts-expect-error (something need to fix with the type)
+        signUp(userData)
+          .then(response => {
+            localStorage.setItem('access-token', response.data.token)
+          })
+          .catch(error => {
+            console.error('Error signing up:', error)
+          })
+      }
+    } catch (error) {
+      console.error('Error signing in with Google:', error)
+    }
+  }
+
   return (
     <main>
       <div className='col-span-2 grid items-start gap-6 lg:col-span-1'>
@@ -31,7 +58,10 @@ const SignIn = () => {
               </p>
             </div>
             <div className='p-6 pt-0 grid gap-4'>
-              <button className='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2'>
+              <button
+                onClick={handleGoogleSignIn}
+                className='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2'
+              >
                 <svg role='img' viewBox='0 0 24 24' className='mr-2 h-4 w-4'>
                   <path
                     fill='currentColor'
@@ -66,6 +96,7 @@ const SignIn = () => {
                     placeholder='demo@example.com'
                     type='email'
                     {...register('email')}
+                    required
                   />
                 </div>
                 <div className='grid gap-2 mt-4'>
@@ -80,6 +111,7 @@ const SignIn = () => {
                     id='password'
                     type='password'
                     {...register('password')}
+                    required
                   />
                 </div>
 

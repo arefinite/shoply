@@ -12,13 +12,11 @@ const userSchema = new Schema<UserType>(
     },
     password: {
       type: String,
-      required: true,
     },
   },
   {
     timestamps: true,
   }
 )
-
 
 export const User = model<UserType>('User', userSchema)
