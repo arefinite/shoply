@@ -1,25 +1,24 @@
-import { Nav } from "@/types/nav";
+import { Nav } from '@/types/nav'
 
 export const navs: Nav[] = [
   {
-    label: "Home",
-    href: "/",
+    label: 'Home',
+    href: '/',
   },
   {
-    label: "All Products",
-    href: "/books",
+    label: 'All Products',
+    href: '/products',
   },
   {
-    label: "Discounted Products",
-    href: "/discounted-products",
+    label: 'Discounted Products',
+    href: '/discounted-products',
   },
   {
-    label: "About",
-    href: "/about",
+    label: 'About',
+    href: '/about',
   },
   {
-    label: "Contact",
-    href: "/contact",
-  }
-  
+    label: 'Contact',
+    href: '/contact',
+  },
 ]

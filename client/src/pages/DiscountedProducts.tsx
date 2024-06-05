@@ -35,7 +35,7 @@ const DiscountedProducts = () => {
   if (isProductsError) return <p>Something went wrong!</p>
 
   return (
-    <main className='center'>
+    <main className='center pb-8'>
       <h2 className='text-2xl text-center font-semibold py-8'>Discounted Gadgets</h2>
       <section className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4'>
         {discountedProducts &&
