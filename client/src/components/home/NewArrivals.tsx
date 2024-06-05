@@ -1,5 +1,5 @@
 import { Product } from '@/types/product'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../ui/card'
+import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '../ui/card'
 import { Button } from '../ui/button'
 
 type NewArrivalProps = {

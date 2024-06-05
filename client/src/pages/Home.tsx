@@ -4,7 +4,7 @@ import NewArrivals from '@/components/home/NewArrivals'
 import { Card, CardDescription } from '@/components/ui/card'
 import { useGetAllProducts } from '@/services/queries'
 import { Product } from '@/types/product'
-import { Divide, LoaderCircle } from 'lucide-react'
+import {  LoaderCircle } from 'lucide-react'
 
 const Home = () => {
   const {
