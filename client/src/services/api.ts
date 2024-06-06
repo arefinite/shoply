@@ -25,7 +25,11 @@ export const getAllProducts = async () => {
 }
 
 export const deleteProduct = async (id: string) => {
-  return await apiClient.delete(`${baseURL}/product/${id}`)
+  return await apiClient.delete(`${baseURL}/product/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
 }
 
 export const getSingleProduct = async (id: string) => {
@@ -33,7 +37,11 @@ export const getSingleProduct = async (id: string) => {
 }
 
 export const updateProduct = async (id: string, data: AddProductFormSchema) => {
-  return await apiClient.patch(`${baseURL}/product/${id}`, data)
+  return await apiClient.patch(`${baseURL}/product/${id}`, data, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
 }
 
 export const signUp = async (data: User) => {
