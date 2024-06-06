@@ -6,7 +6,7 @@ import { config } from '../config/config'
 import { productRouter } from './route/product.route'
 import { userRouter } from './route/user.route'
 import { authRouter } from './route/auth.route'
-
+import path from 'path'
 export const app = express()
 
 // middlewares
@@ -20,7 +20,7 @@ app.use(
     origin: config.FRONTEND_URL,
   })
 )
-
+app.use(express.static(path.join(__dirname,'../../../client/dist')))
 //routes
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/user', userRouter)
